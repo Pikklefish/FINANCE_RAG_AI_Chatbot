@@ -1,0 +1,17 @@
+# Python
+__pycache__/
+*.pyc
+*.pyo
+.venv/
+venv/
+
+# Secrets — NEVER copy into image
+.env
+
+# Dev files
+test_ingest.py
+*.txt.bak
+
+# Git
+.git/
+.gitignore
