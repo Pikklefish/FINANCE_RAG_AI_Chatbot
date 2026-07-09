@@ -31,6 +31,5 @@ class Config:
     def validate(cls) -> None:
         if not cls.GOOGLE_API_KEY:
             raise EnvironmentError(
-                "GOOGLE_API_KEY is not set. "
-                "Add it to your .env file or Render dashboard."
+                "GOOGLE_API_KEY is not set. Add it to your .env file or Render dashboard."
             )
