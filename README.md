@@ -99,11 +99,15 @@ This module served as the central cognitive engine of the architecture. It integ
 
 ## Design choices
 1. Docker Containerization:
+    * A. Why?: Easy resource & dependency management. The project becomes future proof and can be easily integrated to a full CI/CD pipeline (testing, deployment and evaluation).
+    * B. Python 3.12 SLIM: By downloading only the necessary Python libraries it minimizes the Contianer Image thus saving resources. 
 
 ## Testing / Evaluation
 
 ## Deployment
 
-## Troubleshooting
+## Troubleshooting / Errors
+1. Gemini API 429 Error: First attempt to send a query the Gemini API returned a 429 Error
+    * Hypothesis: the chunk size (1024 * 4 chunks) was too big
 
 ## Future Improvement
