@@ -109,6 +109,12 @@ This module served as the central cognitive engine of the architecture. It integ
 
 ## Troubleshooting / Errors
 1. Gemini API 429 Error: First attempt to send a query the Gemini API returned a 429 Error
-    * Hypothesis: the chunk size (1024 * 4 chunks) was too big
+    * Hypothesis: the chunk size (1024 * 4 chunks) was too big -> Wrong (changing it to 512, 2 chuncks, 1500 conversation memory did not solve it)
+
+    * Solution 
+    1. reduce the system prompt and repetivie commands from the QA prompts
+    2. remove the judge LLM and merge it into the system prompt
+    3. add time delays into  
+    4. c hanged themodel from gemini 2.0 flash to gemin 3.1 flash lite (15 RPM, 250K TPM, 500 RPD)
 
 ## Future Improvement

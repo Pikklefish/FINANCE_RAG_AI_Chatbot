@@ -1,38 +1,22 @@
 
-from langchain_google_genai import ChatGoogleGenerativeAI
 from langchain_core.documents import Document
-from langchain_core.messages import HumanMessage
 from typing import List, Tuple
-
-from app.config import Config
-from app.prompt import JUDGE_PROMPT_TEMPLATE
+#Modified: removed inputs.libraries
 
 
 class HallucinationChecker:
     
-    # Required:  nothing
-    # Modifies:  self.llm
-    # Returns:   None
+    # Required:  NONE
+    # Modifies:  NONE
+    # Returns:   NONE
     def __init__(self):
-        self.llm = self._build_llm()   # ChatGoogleGenerativeAI with HALLUCINATION_CHECK_MAX_TOKENS
-
-    # Required:  GEMINI_MODEL, MAX_TOKENS
-    # Modifies:  nothing
-    # Returns:   ChatGoogleGenerativeAI instance
-    def _build_llm(self) -> ChatGoogleGenerativeAI:
-        return ChatGoogleGenerativeAI(
-        model=Config.GEMINI_MODEL,
-        max_tokens=Config.HALLUCINATION_CHECK_MAX_TOKENS,
-        temperature=0.0 
-    )
+        pass
     
     # Required:  answer (str)
-    # Modifies:  nothing
-    # Returns:   True if model expressed uncertainty, False otherwise
+    # Modifies:  NONE
+    # Returns:   True if "answer uncertain" in returned response
     def _is_uncertain(self, answer: str) -> bool:
-        message = HumanMessage(content= JUDGE_PROMPT_TEMPLATE.format(answer=answer))  # the judge prompt
-        response = self.llm.invoke([message])
-        return "yes" in response.text.lower() #(.lower() converts it to lower case)
+        return "answer uncertain" in answer.lower() #(.lower() converts it to lower case)
     
     # Required:  answer (str), source_docs (List[Document])
     # Modifies:  nothing
