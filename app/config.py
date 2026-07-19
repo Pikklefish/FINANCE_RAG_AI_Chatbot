@@ -14,14 +14,14 @@ class Config:
 
 
     # RAG retrieval (ChromaDB)
-    RETRIEVAL_K: int = 4  # how many chunks to retrieve per query
+    RETRIEVAL_K: int = 2  # how many chunks to retrieve per query
 
     # Chunking
-    CHUNK_SIZE: int = 1024   # characters per chunk
-    CHUNK_OVERLAP: int = 154 # overlap between chunks
+    CHUNK_SIZE: int =  512   # characters per chunk
+    CHUNK_OVERLAP: int = 100 # overlap between chunks
 
     # Memory (RunnableWithMessageHistory + trim_messages)
-    MEMORY_MAX_TOKEN_LIMIT: int = 3000  # trim any message over this token
+    MEMORY_MAX_TOKEN_LIMIT: int = 1500  # trim any message over this token
 
     # ChromaDB
     CHROMA_COLLECTION_NAME: str = "finance_docs"

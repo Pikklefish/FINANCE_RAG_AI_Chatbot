@@ -98,9 +98,10 @@ This module served as the central cognitive engine of the architecture. It integ
 5. Streamlit (Frontend UI)
 
 ## Design choices
-1. Docker Containerization:
+1. Docker Containerization :
     * A. Why?: Easy resource & dependency management. The project becomes future proof and can be easily integrated to a full CI/CD pipeline (testing, deployment and evaluation).
     * B. Python 3.12 SLIM: By downloading only the necessary Python libraries it minimizes the Contianer Image thus saving resources. 
+    * Production level development: shipping to AWS (if it works on my machine, it works on everyone else's)
 
 ## Testing / Evaluation
 

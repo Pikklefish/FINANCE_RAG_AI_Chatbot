@@ -15,3 +15,7 @@ test_ingest.py
 # Git
 .git/
 .gitignore
+
+
+# personal
+future.txt
