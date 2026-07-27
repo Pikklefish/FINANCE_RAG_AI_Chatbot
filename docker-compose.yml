@@ -3,7 +3,7 @@ services:
   chatbot:
     build: .
     ports:
-      - "8501:8501"     # localhost:8501 → container:8501
+      - "8080:8080"     # localhost:8080 → container:8080
     env_file:
       - .env            # reads GOOGLE_API_KEY from your local .env file
     restart: unless-stopped
