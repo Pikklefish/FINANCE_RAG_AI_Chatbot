@@ -1,5 +1,5 @@
 # RAG-Chatbot for Finance Documents
-
+![flowchart]flowchart_-29.jpg
 ## Project Overview
 Architected and deployed a containerized (DOCKER), production-ready Retrieval-Augmented Generation (RAG) chatbot for the finance sector. Built with `Python`, `LangChain`, `ChromaDB`, and the `Gemini 2.0 Flash API`, the system ingests unstructured financial PDFs and executes highly deterministic, context-grounded queries. To strictly mitigate the risk of financial hallucinations, the architecture features a custom "LLM-as-a-Judge" heuristic safety layer that intercepts unverified outputs, enforces strict citation tracking, and ensures users receive only factually grounded insights.
 
