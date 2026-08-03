@@ -1,4 +1,4 @@
-
+#For local dev env only (not used in production)
 services:
   chatbot:
     build: .
