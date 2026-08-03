@@ -1,5 +1,7 @@
 # RAG-Chatbot for Finance Documents
 
+Deployment link: https://finance-rag-pikklefish-793308805436.northamerica-northeast2.run.app
+
 ## Project Overview
 Architected and deployed a containerized (DOCKER), production-ready Retrieval-Augmented Generation (RAG) chatbot for the finance sector. Built with `Python`, `LangChain`, `ChromaDB`, and the `Gemini 2.0 Flash API`, the system ingests unstructured financial PDFs and executes highly deterministic, context-grounded queries. To strictly mitigate the risk of financial hallucinations, the architecture features a custom "LLM-as-a-Judge" heuristic safety layer that intercepts unverified outputs, enforces strict citation tracking, and ensures users receive only factually grounded insights.
 
@@ -22,6 +24,15 @@ Architected and deployed a containerized (DOCKER), production-ready Retrieval-Au
     F. docker-compose.yml
     G. Dockerfile
     H. requirements.txt
+
+## Tools Used
+1. Python (programming language)
+2. Langchain (framework)
+3. Docker (Container)
+4. Chroma DB (Databse)
+5. Streamlit (Frontend UI)
+6. Google Cloud (Deployment)
+7. GitHub Actions (CI/CD)
 
 
 ## `config.py`
@@ -92,12 +103,6 @@ This module served as the central cognitive engine of the architecture. It integ
 5. **Synchronous Inference & Payload Surfacing (`query`)**: Acted as the public execution interface. It invoked the retrieval-augmented generation loop and concurrently surfaced both the generated string and raw `Document` objects for downstream heuristic evaluation.
 
 
-## Tools Used
-1. Python (programming language)
-2. Langchain (framework)
-3. Docker (Container)
-4. Chroma DB (Databse)
-5. Streamlit (Frontend UI)
 
 ## Design choices
 1. Docker Containerization :
@@ -107,7 +112,9 @@ This module served as the central cognitive engine of the architecture. It integ
 
 ## Testing / Evaluation
 
-## Deployment
+## Deployment using Google Cloud
+1. Artifact Registry: centralized, secure storage location where code packages and components (compiled code) are stored for the cloud to pull from.
+2. My PC -> Github -> Deploy.yml (main branch trigger) -> Github compiles my code (VM: instantiates Docker) -> Google Cloud Deploy (Docker containers runs on Google Infrastructure)
 
 ## Troubleshooting / Errors
 1. Gemini API 429 Error: First attempt to send a query the Gemini API returned a 429 Error
