@@ -22,15 +22,19 @@ Architected and deployed a containerized (DOCKER), production-ready Retrieval-Au
     F. docker-compose.yml
     G. Dockerfile
     H. requirements.txt
+    I. .github\workflows
+        1. deploy.yml
 
 ## Tools Used
-1. Python (programming language)
+1. Python (Backend programming language)
 2. Langchain (framework)
-3. Docker (Container)
-4. Chroma DB (Databse)
-5. Streamlit (Frontend UI)
-6. Google Cloud (Deployment)
-7. GitHub Actions (CI/CD)
+3. Gemini API (Language Model)
+4. Docker (Container)
+5. Chroma DB (Databse)
+6. Streamlit (Frontend UI)
+7. Google Cloud (Deployment)
+8. GitHub Actions (CI/CD)
+9. Ruff/MyPy (static testing/linter)
 
 
 ## `config.py`
@@ -100,19 +104,32 @@ This module served as the central cognitive engine of the architecture. It integ
 4. **Stateful Memory Isolation (`RunnableWithMessageHistory`)**: Functioned as state-injection middleware. It mapped an `InMemoryChatMessageHistory` instance to a unique `session_id`, automating the injection and extraction of chat histories to prevent cross-session data leakage.
 5. **Synchronous Inference & Payload Surfacing (`query`)**: Acted as the public execution interface. It invoked the retrieval-augmented generation loop and concurrently surfaced both the generated string and raw `Document` objects for downstream heuristic evaluation.
 
+## Continuous Integration / Deployment
+### Phase 1 Static Analysis (CI testing)
+Phase 1 on testing consists of validating syntax and formating errors (code linting, code formating, file validation, and type checking) using `ruff` and `mypy`. The test can be runned manually by: 
+```
+ruff check app/
+ruff format app/ --check
+mypy app/
 
+##<<automatic fixes>>##
+ruff check app/ --fix
+ruff format app/
+```
+Reason for using `ruff` is that it is extremely fast, all-in one linter and code formatter that is favored by the industry. `mypy` is the industry standard type checker.
+
+
+### Continuous Deployment
+When pushed or merged to the main branch Github Action triggers `deploy.yml`. The necessary tests are runned and if passed Google Cloud Platform and the repository check authentication (`Workload Identity Federation`: more secure, shorterm key) and push the docker container. Google Cloud run pulls the image and deploys it to the cloud.
+## Deployment using Google Cloud Platform
+1. Artifact Registry: centralized, secure storage location where code packages and components (compiled code) are stored for the cloud to pull from.
+2. My PC -> Github -> Deploy.yml (main branch trigger) -> Github compiles my code (VM: instantiates Docker) -> Google Cloud Deploy (Docker containers runs on Google Infrastructure)
 
 ## Design choices
 1. Docker Containerization :
     * A. Why?: Easy resource & dependency management. The project becomes future proof and can be easily integrated to a full CI/CD pipeline (testing, deployment and evaluation).
     * B. Python 3.12 SLIM: By downloading only the necessary Python libraries it minimizes the Contianer Image thus saving resources. 
     * Production level development: shipping to AWS (if it works on my machine, it works on everyone else's)
-
-## Testing / Evaluation
-
-## Deployment using Google Cloud
-1. Artifact Registry: centralized, secure storage location where code packages and components (compiled code) are stored for the cloud to pull from.
-2. My PC -> Github -> Deploy.yml (main branch trigger) -> Github compiles my code (VM: instantiates Docker) -> Google Cloud Deploy (Docker containers runs on Google Infrastructure)
 
 ## Troubleshooting / Errors
 1. Gemini API 429 Error: First attempt to send a query the Gemini API returned a 429 Error
