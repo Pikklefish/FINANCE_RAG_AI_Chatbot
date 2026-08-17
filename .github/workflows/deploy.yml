@@ -18,7 +18,49 @@ env:
   IMAGE: northamerica-northeast2-docker.pkg.dev/${{ secrets.GCP_PROJECT_ID }}/rag-chatbot/finance-chatbot:${{ github.sha }}
 
 jobs:
+  static-analysis:
+    name: Static Analysis
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+
+      - name: Install dev tools
+        run: pip install ruff mypy
+
+      - name: Run Ruff linter
+        run: ruff check app/
+
+      - name: Run Ruff formatter check
+        run: ruff format app/ --check
+
+      - name: Run mypy type checker
+        run: mypy app/
+
+      - name: Validate YAML files
+        run: |
+          python -c "
+          import yaml
+          import sys
+          files = ['docker-compose.yml', '.github/workflows/deploy.yml']
+          for f in files:
+              try:
+                  with open(f) as file:
+                      yaml.safe_load(file)
+                  print(f'✅ {f} is valid YAML')
+              except Exception as e:
+                  print(f'❌ {f} is INVALID: {e}')
+                  sys.exit(1)
+          "
+
   deploy:
+    name: Deploy
+    needs: static-analysis
     runs-on: ubuntu-latest
 
     steps:
@@ -30,7 +72,7 @@ jobs:
         with:
           workload_identity_provider: ${{ secrets.GCP_WORKLOAD_IDENTITY_PROVIDER }}
           service_account: ${{ secrets.GCP_SERVICE_ACCOUNT }}
-          project_id: ${{env.PROJECT_ID}}
+          project_id: ${{ env.PROJECT_ID }}
 
       - name: Set up Cloud SDK
         uses: google-github-actions/setup-gcloud@v2

@@ -34,7 +34,7 @@ gatherUsageStats = false\n\
 EXPOSE 8080
 
 #Health Check
-HEALTHCHECK CMD curl --fail http://localhost:8501/_stcore/health || exit 1
+HEALTHCHECK CMD curl --fail http://localhost:8080/_stcore/health || exit 1
 
 #Start Command
 ENTRYPOINT ["streamlit", "run", "app/main.py", \

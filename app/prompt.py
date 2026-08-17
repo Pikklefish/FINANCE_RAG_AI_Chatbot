@@ -34,7 +34,3 @@ or inability to answer due to lack of information?
 Answer with only YES or NO.
 
 Answer:{answer}"""
-
-
-
-

@@ -19,3 +19,7 @@ pypdf==5.4.0
 
 # ── Environment ────────────────────────────────────────────────────────────
 python-dotenv==1.1.0
+
+# ── Dev tools (not needed in production container) ───────────────────────────
+ruff==0.8.4
+mypy==1.14.0
